@@ -15,7 +15,7 @@ import Home from './src/components/Home.js'
  class App extends React.Component {
   render() {
     return (
-    <Home/>
+    <AppNavitagation/>
     )
   }
 }

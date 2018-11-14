@@ -4,6 +4,7 @@ import ListViewNews  from './NewsList.js';
 import API from './../../utils/api.js';
 import cheerio from 'react-native-cheerio';
 import  { withNavigation }  from 'react-navigation';
+import SectionFilterList from './SectionFilterList';
 
 class Home extends React.Component {
   constructor(props){
@@ -31,9 +32,8 @@ class Home extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        {/* <WebViewDetail style= {styles.webView}></WebViewDetail> */}
+          <SectionFilterList/>
           <ListViewNews  dataSource = {this.state.newsList ? this.state.newsList : [] } /> 
-
       </SafeAreaView>
     );
   }
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Home;
+  export default withNavigation(Home);

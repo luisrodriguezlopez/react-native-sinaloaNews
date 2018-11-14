@@ -1,42 +1,38 @@
 import React from 'react';
 import {StyleSheet,Text, View, Image, TouchableOpacity} from 'react-native';
 import cheerio from 'react-native-cheerio';
+import  { withNavigation }  from 'react-navigation';
 
 class NewsItem extends React.Component {
     constructor(props) {
         super(props);
+
+        this.$ = cheerio.load(this.props.html.item)   
         this.onPress = this.onPress.bind(this)
     }
 
-
-    onPress = () => {
-        const {navigate} = this.props
-         console.log('to detail')
-        console.log(navigate)
-       navigate.navigate('Detail')
-      }
-
-
     render() {
-        const $ = cheerio.load(this.props.title.item)   
-        console.log('newItemImage','https://www.debate.com.mx$'.concat($('img[src]').attr('src')) )
-
        return (   
-        // <TouchableOpacity
-        // style={styles.button}
-        // onPress={this.onPress} >        
+        <TouchableOpacity
+        style={styles.button}
+        onPress={this.onPress} >        
             <View style = {styles.container} > 
-        
             <Image
                 style={ styles.imageItem}
-                source={{uri: 'https://www.debate.com.mx'.concat($('img[src]').attr('src')) }}
+                source={{uri: 'https://www.debate.com.mx'.concat(this.$('img[src]').attr('src')) }}
             />
-                <Text  style = { styles.title} > { $('a[href][title]').attr("title") } </Text>
+                <Text  style = { styles.title} > {this.$('a[href][title]').attr("title") } </Text>
             </View>
-        // </TouchableOpacity>
+         </TouchableOpacity>
 
        )
     }
+
+    onPress = () => {
+       this.props.navigation.navigate('Detail', {
+        otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
+      });
+      }
 
 }
 const styles = StyleSheet.create({
@@ -76,4 +72,4 @@ const styles = StyleSheet.create({
         width : '100%',
     }
   });
-export default NewsItem 
+  export default withNavigation(NewsItem);

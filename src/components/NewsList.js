@@ -2,6 +2,7 @@ import React , { Component } from 'react';
 import {FlatList , Text , View } from 'react-native';
 import NewsItem from './NewsItem.js';
 import cheerio from 'react-native-cheerio';
+import  { withNavigation }  from 'react-navigation';
 
 
 class ListViewNews extends React.Component {
@@ -16,13 +17,12 @@ class ListViewNews extends React.Component {
     a[href][title]").attr("title") 
     */
     render() {
-        console.log('newList',this.props.dataSource)
 
         return(
             <FlatList  
                 data={this.props.dataSource}
                 keyExtractor={this._keyExtractor}
-                renderItem={ ( html ) =>  <NewsItem title = { html } ></NewsItem>  }
+                renderItem={ ( html ) =>  <NewsItem html = { html } ></NewsItem>  }
             />
         );
     }
@@ -31,4 +31,4 @@ class ListViewNews extends React.Component {
 
 }
 
-export default ListViewNews;
+export default withNavigation(ListViewNews);
