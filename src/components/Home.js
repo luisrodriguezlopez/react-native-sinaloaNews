@@ -11,14 +11,14 @@ class Home extends React.Component {
     super(props) 
 
     this.state = {
-      newsList: []
+      newsList: [],
+      type : 0,
     }
   }
  
   componentDidMount() {
-    const fruits = [];
 
-     API.getNews().then((response) =>  {
+     API.getNewsDebate().then((response) =>  {
       const $ = cheerio.load(response.data)     
       this.setState({ newsList:  $('article').map((_, article) =>  { 
         return $(article).html()
@@ -26,13 +26,28 @@ class Home extends React.Component {
       })  
      })
 
+    //  API.getNewsIM().then((response) =>  {
+    //   const $ = cheerio.load(response)     
+    //   this.setState({ newsList:  $('item').map((_, article) =>  { 
+    //     return $(article).html()
+    //     })
+    //   })      
+    // })
+
      
+  }
+
+  eventCategory(item)  {
+    console.log('change' , item)
+    setState = ( {
+        type : item
+    })
   }
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-          <SectionFilterList/>
+          <SectionFilterList changeCategory ={ this.eventCategory.bind(this)}/>
           <ListViewNews  dataSource = {this.state.newsList ? this.state.newsList : [] } /> 
       </SafeAreaView>
     );

@@ -22,7 +22,7 @@ class ListViewNews extends React.Component {
             <FlatList  
                 data={this.props.dataSource}
                 keyExtractor={this._keyExtractor}
-                renderItem={ ( html ) =>  <NewsItem html = { html } ></NewsItem>  }
+                renderItem={ ( html ) =>  <NewsItem html = { html } type = {0} ></NewsItem>  }
             />
         );
     }

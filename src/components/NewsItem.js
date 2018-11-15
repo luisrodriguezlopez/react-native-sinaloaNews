@@ -6,13 +6,29 @@ import  { withNavigation }  from 'react-navigation';
 class NewsItem extends React.Component {
     constructor(props) {
         super(props);
+        this.$ = cheerio.load(this.props.html.item ,{  
+          normalizeWhitespace: true,
+            xmlMode: true
+        }); 
 
-        this.$ = cheerio.load(this.props.html.item)   
         this.onPress = this.onPress.bind(this)
     }
 
     render() {
-       return (   
+        if (this.props.type == 0 )  {
+        return (this.loadDebateItem())
+        }else { 
+          return (this.loadImItem())
+        }
+    }
+    onPress = () => {
+       this.props.navigation.navigate('Detail', {
+        otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
+      });
+      }
+
+      loadDebateItem  = () => {
+        return (
         <TouchableOpacity
         style={styles.button}
         onPress={this.onPress} >        
@@ -23,15 +39,23 @@ class NewsItem extends React.Component {
             />
                 <Text  style = { styles.title} > {this.$('a[href][title]').attr("title") } </Text>
             </View>
-         </TouchableOpacity>
+        </TouchableOpacity> )
+      }
 
-       )
-    }
 
-    onPress = () => {
-       this.props.navigation.navigate('Detail', {
-        otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
-      });
+      loadImItem  = () => {
+        return (
+        <TouchableOpacity
+        style={styles.button}
+        onPress={this.onPress} >        
+            <View style = {styles.container} > 
+            <Image
+                style={ styles.imageItem}
+                source={{uri: this.$('img[src]').attr('src') }}
+            />
+                <Text  style = { styles.title} > {this.$('title').text()}</Text>
+            </View>
+        </TouchableOpacity> )
       }
 
 }
