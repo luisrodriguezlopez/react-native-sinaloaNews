@@ -5,26 +5,49 @@ import  { withNavigation }  from 'react-navigation';
 
 class NewsItem extends React.Component {
     constructor(props) {
-        super(props);
-        this.$ = cheerio.load(this.props.html.item ,{  
-          normalizeWhitespace: true,
-            xmlMode: true
-        }); 
-
+        super(props);        
         this.onPress = this.onPress.bind(this)
     }
 
     render() {
+        console.log('renderItem' , this.props.type)
+        this.$ = cheerio.load(this.props.html.item ,{  
+            normalizeWhitespace: true,
+              xmlMode: true
+          }); 
         if (this.props.type == 0 )  {
-        return (this.loadDebateItem())
-        }else { 
+         return (this.loadDebateItem())
+        }else if (this.props.type == 1) { 
           return (this.loadImItem())
+        }else {
+            return (this.loadRealidad() )
         }
     }
+
+
+    componentWillReceiveProps(nextProps) {
+        console.log('item' ,nextProps.type)
+        console.log('item' ,this.props.type)
+        if (nextProps.type !== this.props.type) {  
+            
+        }
+    
+    }
+
+
     onPress = () => {
-       this.props.navigation.navigate('Detail', {
-        otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
-      });
+        switch (this.props.type) {
+            case 0 :  
+                     this.props.navigation.navigate('Detail', {
+                     otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
+            })
+             case 1 :   this.props.navigation.navigate('Detail', {
+                        otherParam: ''.concat(this.$('a[href]').attr("href")),
+             });
+             default : this.props.navigation.navigate('Detail', {
+                      otherParam: ''.concat(this.$('a[href]').attr("href"))
+             })
+        }
       }
 
       loadDebateItem  = () => {
@@ -44,6 +67,8 @@ class NewsItem extends React.Component {
 
 
       loadImItem  = () => {
+          console.log('load type' , this.props.type)
+          console.log('xml' , this.$.xml())
         return (
         <TouchableOpacity
         style={styles.button}
@@ -57,6 +82,23 @@ class NewsItem extends React.Component {
             </View>
         </TouchableOpacity> )
       }
+
+      loadRealidad  = () => {
+        console.log('htlm' , this.$.html())
+        return (
+      <TouchableOpacity
+      style={styles.button}
+      onPress={this.onPress} >        
+          <View style = {styles.container} > 
+          <Image
+              style={ styles.imageItem}
+              source={{uri: this.$('img[src]').attr('src') }}
+          />
+              <Text  style = { styles.title} > {this.$('a[href][title]').attr("title")}</Text>
+          </View>
+      </TouchableOpacity> )
+    }
+
 
 }
 const styles = StyleSheet.create({
