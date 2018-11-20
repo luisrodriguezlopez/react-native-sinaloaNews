@@ -5,7 +5,7 @@ import { FlatList , Text , StyleSheet , View , TouchableOpacity } from 'react-na
 class SectionFilterList extends React.Component {
     constructor(props){
         super(props)
-        this.categories = [ { title: "Debate" , type : 0 },{ title : "IMNoticias" , type : 1} , { title : "RealidadEnRed" , type: 2}  ]
+        this.categories = [ { title: "Debate" , type : 0 },{ title : "IMNoticias" , type : 1} , { title : "RealidadEnRed" , type: 2} ,{ title : 'Puntualizando' , type: 3}   ]
 
     }
 

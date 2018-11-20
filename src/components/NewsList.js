@@ -30,7 +30,9 @@ class ListViewNews extends React.Component {
                     break 
                 case 1 : this.apiCallIM() 
                     break
-                default : this.apiCallRealidad()
+                case 2 : this.apiCallRealidad() 
+
+                default : this.apiCallPuntualizando()
             }
         }
     
@@ -66,6 +68,16 @@ class ListViewNews extends React.Component {
                 })
           })})
       }
+
+      apiCallPuntualizando() {
+        API.getNewsPuntualizando().then( (response) => {
+          const $ = cheerio.load(response)     
+          this.setState({ newsList:  $('article').map((_, article) =>  { 
+              console.log('article' , $(article).html())
+              return $(article).html()
+              })
+        })})
+    }
     
     /*
     a[href][title]").attr("title") 
