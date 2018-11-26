@@ -20,19 +20,11 @@ class Api {
     }
 
     async getNewsIM() {
-        return new Promise((resolve , rejected) => {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {    // This and `open` could be flip-flopped
-                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    resolve(xhr.responseText)
-                }              
-            }   
-            xhr.open("GET", BASE_API_IM, true);
-            xhr.send("data=data");
-            
-        }).catch( (error) => {
-            console.log(error)
-            rejected(error)
+        return new Promise( (resolve,rejected) => {
+            axios(BASE_API_IM)
+            .then( (response) => {
+                resolve(response.data)
+            })          
         })
     }
 
@@ -40,10 +32,9 @@ class Api {
         return new Promise( (resolve,rejected) => {
             axios(BASE_API_REALIDAD)
             .then( (response) => {
-                console.log('html' , response.data)
                 resolve(response.data)
             })          
-            })
+        })
     }
 
 
@@ -51,10 +42,9 @@ class Api {
         return new Promise ( ( resolve , rejected ) => {
             axios(BASE_API_PUNTUALIZANDO)
             .then( (response) => {
-                console.log('html' , response.data)
                 resolve(response.data)
             })          
-            })
+       })
     }
 }
 

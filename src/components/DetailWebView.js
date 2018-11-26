@@ -8,8 +8,10 @@ class DetailWebView extends React.Component {
     }
     render() {
         const { navigation } = this.props;
+        console.log('navigationData' , this.props.navigation)
+
+        console.log('link' , navigation.getParam('otherParam', ''))
         const link = navigation.getParam('otherParam', 'some default value');
-        console.log(link)
         return(
             <WebView
                 source={{uri: link}}

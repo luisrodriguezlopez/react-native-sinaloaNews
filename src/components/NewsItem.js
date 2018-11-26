@@ -10,7 +10,6 @@ class NewsItem extends React.Component {
     }
 
     render() {
-        console.log('renderItem' , this.props.type)
         this.$ = cheerio.load(this.props.html.item ,{  
             normalizeWhitespace: true,
               xmlMode: true
@@ -26,12 +25,7 @@ class NewsItem extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log('item' ,nextProps.type)
-        console.log('item' ,this.props.type)
-        if (nextProps.type !== this.props.type) {  
-            
-        }
-    
+      
     }
 
 
@@ -39,15 +33,19 @@ class NewsItem extends React.Component {
         switch (this.props.type) {
             case 0 :  
                      this.props.navigation.navigate('Detail', {
-                     otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")),
-            })
+                     otherParam: 'https://www.debate.com.mx'.concat(this.$('a[href]').attr("href")) , })
+                     break
+        
              case 1 :   this.props.navigation.navigate('Detail', {
                         otherParam: ''.concat(this.$('a[href]').attr("href")),
+                        
              });
-             default : this.props.navigation.navigate('Detail', {
-                      otherParam: ''.concat(this.$('a[href]').attr("href"))
-             })
-        }
+                     break
+             default :
+             this.props.navigation.navigate('Detail', {
+                      otherParam: ''.concat(this.$('a[href]').attr("href"))})
+                       break
+           }
       }
 
       loadDebateItem  = () => {
@@ -67,8 +65,7 @@ class NewsItem extends React.Component {
 
 
       loadImItem  = () => {
-          console.log('load type' , this.props.type)
-          console.log('xml' , this.$.xml())
+
         return (
         <TouchableOpacity
         style={styles.button}
@@ -84,7 +81,6 @@ class NewsItem extends React.Component {
       }
 
       loadRealidad  = () => {
-        console.log('htlm' , this.$.html())
         return (
       <TouchableOpacity
       style={styles.button}
