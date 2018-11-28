@@ -94,9 +94,8 @@ class NewsItem extends React.Component {
           </View>
       </TouchableOpacity> )
     }
-
-
 }
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,

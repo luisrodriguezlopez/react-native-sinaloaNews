@@ -111,7 +111,7 @@ class ListViewNews extends React.Component {
         } else {
             console.log('renderList')
         return(
-            <FlatList  
+            <FlatList  style = {styles.listView}
                 data={this.state.newsList}
                 keyExtractor={this._keyExtractor}
                 renderItem={ ( html ) =>  <NewsItem html = { html } type = {this.props.type} ></NewsItem>  }
@@ -125,8 +125,10 @@ const styles = StyleSheet.create({
         loading: {
             textAlign: 'center',
             fontSize: 20,
-            height: '90%'
-             
+            height: '90%'    
+        },
+        listView: {
+            height: '80%'
         }
 })
 export default withNavigation(ListViewNews);

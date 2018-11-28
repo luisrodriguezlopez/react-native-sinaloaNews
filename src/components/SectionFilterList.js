@@ -38,15 +38,20 @@ const styles = StyleSheet.create({
     },
     container : {
         marginBottom : 10,
-        marginTop : 10 ,
-        height : 40,
+        marginTop :  0,
+        height : 10,
+        height: 35,       
+         
     },
     itemCategory : {
         backgroundColor : 'red' ,
-        marginLeft : 10, 
+        marginLeft : 10,
+        marginTop : 14, 
         padding : 8,
         borderRadius: 10,
         height: 35,
+        alignContent: 'center',
+        justifyContent: 'center',
     }
 
 })
