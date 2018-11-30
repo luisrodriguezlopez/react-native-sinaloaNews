@@ -38,7 +38,7 @@ const RootStack = createStackNavigator({
   },
   ModalView: {screen: ModalView ,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: 'SCREEN1',
+      headerTitle: '',
       headerLeft: <Button
         onPress={() => {
           navigation.goBack(null);

@@ -51,6 +51,7 @@ class Api {
         return new Promise ( ( resolve , rejected ) => {
             axios(url)
             .then( (response) => {
+                console.log('resolve');
                 resolve(response.data)
             }).catch((error) => {
                 console.log('ups');

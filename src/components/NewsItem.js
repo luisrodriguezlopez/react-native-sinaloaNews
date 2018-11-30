@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet,Text, View, Image, TouchableOpacity, Platform} from 'react-native';
 import cheerio from 'react-native-cheerio';
 import  { withNavigation }  from 'react-navigation';
 
@@ -18,12 +18,12 @@ class NewsItem extends React.Component {
          return (this.loadDebateItem())
         }else if (this.props.type == 1) { 
           return (this.loadImItem())
-        }else {
+        }else if (this.props.type == 2){
             return (this.loadRealidad() )
+        }else {
+            return (this.loadRealidad())
         }
     }
-
-
     componentWillReceiveProps(nextProps) {
       
     }
@@ -117,11 +117,11 @@ const styles = StyleSheet.create({
     title: {
         flex:1,
         borderRadius: 10,
-        fontFamily: 'Cochin',
+        fontFamily:  Platform.OS === 'ios' ? 'AvenirNext-Bold': 'Roboto',
         fontSize: 20,
         width: '100%',
         position: 'absolute',
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        // backgroundColor: 'rgba(52, 52, 52, 0.8)',
         alignContent: 'center',
         color: 'white',
         padding: 5,

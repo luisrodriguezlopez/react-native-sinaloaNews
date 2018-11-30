@@ -13,19 +13,24 @@ class ListViewNews extends React.Component {
           this.state = {
               newsList: [],
               loading : false,
+              categories: this.props.categories,
             }
         this.apiCallDebate = this.apiCallDebate.bind(this)
         this.apiCallIM = this.apiCallIM.bind(this)
+        this.genericCall = this.genericCall.bind(this)
     }
     _keyExtractor = (item, index) => index.toString();
     
   
  
     componentDidMount() {
+        console.log('componentDidMount')
         this.apiCallDebate()
     } 
    
     componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps', [ nextProps, this.props ])
+
         if (nextProps.type !== this.props.type) {  
             switch(nextProps.type) {
                 case 0 :  this.apiCallDebate()
@@ -33,12 +38,28 @@ class ListViewNews extends React.Component {
                 case 1 : this.apiCallIM() 
                     break
                 case 2 : this.apiCallRealidad() 
-
-                default : this.apiCallPuntualizando()
+                case 3: this.apiCallPuntualizando()
+                default : this.genericCall(nextProps.categories[nextProps.type].title)
                     break
             }
         }
     }  
+
+    genericCall(link) {
+        console.log('link' , link)
+        this.loading()
+        API.getNewsBy(link).then((response) => {
+            this.endLoading()
+            const $ = cheerio.load(response)     
+            console.log('generic article')
+
+            this.setState({ newsList:  $('article').map((_, article) =>  { 
+              return $(article).html()
+              })
+            })  
+        })
+    }   
+
 
     apiCallDebate() {
         this.loading()
@@ -103,13 +124,13 @@ class ListViewNews extends React.Component {
     a[href][title]").attr("title") 
     */
     render() {
-        console.log(this.state.loading)
         if (this.state.loading == true ) {
             console.log('render Loading')
 
                 return (<Text style = {styles.loading} > 🚀🚀🚀🚀 { this.state.loading } </Text>)
         } else {
             console.log('renderList')
+            console.log('itemState',this.props)
         return(
             <FlatList  style = {styles.listView}
                 data={this.state.newsList}

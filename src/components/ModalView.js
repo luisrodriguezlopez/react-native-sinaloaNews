@@ -8,15 +8,24 @@ class ModalView extends React.Component {
     constructor(props) {
     super(props)
     this.state = { text: 'https://www.debate.com.mx' };
+    this.goBack = this.goBack.bind(this)
+    }
+
+    goBack(){
+        this.props.navigation.goBack(null),
+        addPageFunction(this.state)
+        console.log('cerrar')
     }
     render() {
+        const { navigation } = this.props;
+        const addPageFunction =  navigation.getParam('otherParam', 'some default value')
         return(
             <SafeAreaView style={{flex:1}}>
             <View style = {styles.container} >
             
                 <View style= {styles.modal}>     
                     <View style = {styles.containerButton}>
-                        <TouchableOpacity style = { styles.closeBtn}  underlayColor="red" onPress = {() => this.props.navigation.goBack(null)}>
+                        <TouchableOpacity style = { styles.closeBtn}  underlayColor="red" onPress = {() =>  this.props.navigation.goBack(addPageFunction(this.state.text)) }>
                         <Text style={styles.titleButton}>X</Text>
                         </TouchableOpacity>         
                     </View>
