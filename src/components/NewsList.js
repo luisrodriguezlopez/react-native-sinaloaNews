@@ -51,12 +51,23 @@ class ListViewNews extends React.Component {
         API.getNewsBy(link).then((response) => {
             this.endLoading()
             const $ = cheerio.load(response)     
-            console.log('generic article')
-
-            this.setState({ newsList:  $('article').map((_, article) =>  { 
-              return $(article).html()
-              })
-            })  
+            if  ($('article').count > 0) {
+                this.setState({ newsList:  $('article').map((_, article) =>  {
+                    console.log('generic article', article)
+                    return $(article).html()
+                    })
+                  })  
+            } else if ($('section').count > 0) {
+                console.log('generic section')
+                this.setState({ newsList:  $('section').map((_, section) =>  { 
+                    return $(section).html()
+                    })
+                  })  
+            }else {
+                console.log('hmtl' ,response)
+                this.setState({ newsList:  []
+                  })  
+            }
         })
     }   
 
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
             height: '90%'    
         },
         listView: {
-            height: '80%'
+            height: '88%'
         }
 })
 export default withNavigation(ListViewNews);

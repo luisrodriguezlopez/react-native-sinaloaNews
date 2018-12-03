@@ -40,6 +40,7 @@ const RootStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTitle: '',
       headerLeft: <Button
+        title=''
         onPress={() => {
           navigation.goBack(null);
         }}

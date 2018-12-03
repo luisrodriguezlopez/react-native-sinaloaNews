@@ -25,7 +25,7 @@ class ModalView extends React.Component {
             
                 <View style= {styles.modal}>     
                     <View style = {styles.containerButton}>
-                        <TouchableOpacity style = { styles.closeBtn}  underlayColor="red" onPress = {() =>  this.props.navigation.goBack(addPageFunction(this.state.text)) }>
+                        <TouchableOpacity style = { styles.closeBtn}  underlayColor="red" onPress = {() =>  this.props.navigation.goBack(null) }>
                         <Text style={styles.titleButton}>X</Text>
                         </TouchableOpacity>         
                     </View>
@@ -39,7 +39,7 @@ class ModalView extends React.Component {
                 </View>
                 <WebView source={{uri: this.state.text}} />
                 <TouchableOpacity  style= {styles.addBtn}
-                       onPress = {() => this.props.navigation.goBack(null)} >
+                       onPress = { () =>  this.props.navigation.goBack(addPageFunction(this.state.text)) } >
                          <Text style={styles.titleButton}>Agregar pagina</Text>
                        </TouchableOpacity>
 
