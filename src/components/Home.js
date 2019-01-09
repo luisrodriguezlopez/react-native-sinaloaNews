@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet,SafeAreaView, Text, View, Button} from 'react-native';
+import { StyleSheet,SafeAreaView, Text, Platform, View, Button, TouchableOpacity} from 'react-native';
 import ListViewNews  from './NewsList.js';
 import ModalView from './ModalView';
 import  { withNavigation }  from 'react-navigation';
@@ -7,12 +7,14 @@ import SectionFilterList from './SectionFilterList';
 
 class Home extends React.Component {
   static navigationOptions = ({ navigation }) => {
+     if (Platform.OS == 'ios') { 
     return {
-      headerTitle: (
+   
+      headerTitle:  (
         <Button style={styles.title}
           onPress={() => console.log('holi')}
           title="SinaloaNews"
-          color="red"
+          color  = 'red'
         />
       ),
          headerTitleStyle: {
@@ -26,8 +28,19 @@ class Home extends React.Component {
         />
       )
     };
+  } else {
+    return {
+     headerTitle: ( <Text style={styles.title}>    SinalonaNews</Text>),
+     headerTitleStyle: { alignSelf: 'center' },
+     headerRight: 
+     <TouchableOpacity  onPress={() => navigation.navigate('ModalView' , { otherParam : navigation.getParam('addPage') }) } >
+      <Text style={styles.title}>+  </Text>
+     </TouchableOpacity>
+     ,
+   
+    }
   }
-
+}
 
      
   constructor(props){
@@ -94,10 +107,10 @@ const styles = StyleSheet.create({
       marginTop: 10,
     },
     title: {
+      textAlign: 'center',
       fontFamily: 'AvenirNext-Heavy',
-      fontSize: 10,
-      color: 'red'
-
+      fontSize: 20,
+      color: 'red',
     }
   });
 
